@@ -1,0 +1,12 @@
+version: 0.2
+# Backend repo root = contents of backend/. Packages each Lambda as index.py (handler index.lambda_handler)
+# and updates the function code. Run by CodePipeline P1 on every push.
+phases:
+  build:
+    commands:
+      - |
+        for fn in index-photos search-photos; do
+          (cd "$fn" && cp lambda_function.py index.py && zip -q -j "../$fn.zip" index.py)
+          aws lambda update-function-code --function-name "$fn" --zip-file "fileb://$fn.zip"
+          aws lambda wait function-updated --function-name "$fn"
+        done
