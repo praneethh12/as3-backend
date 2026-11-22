@@ -1,6 +1,5 @@
 version: 0.2
-# Backend repo root = contents of backend/. Packages each Lambda as index.py (handler index.lambda_handler)
-# and updates the function code. Run by CodePipeline P1 on every push.
+# Backend repo root = contents of backend/
 phases:
   build:
     commands:
